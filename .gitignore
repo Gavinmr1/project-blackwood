@@ -16,3 +16,6 @@ Backup/
 UpgradeLog.htm
 *.sln
 *.slnx
+.vsconfig
+Automation_*.sln
+Automation_*.slnx
