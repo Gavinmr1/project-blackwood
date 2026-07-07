@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "Engine/StaticMesh.h"
 #include "BlackwoodItemDefinition.generated.h"
 
 UENUM(BlueprintType)
@@ -41,4 +42,10 @@ public:
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Blackwood|Item")
     float Weight = 0.f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Blackwood|Item|Visual")
+    TObjectPtr<UStaticMesh> WorldMesh = nullptr;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Blackwood|Item|Visual")
+    TObjectPtr<UStaticMesh> EquippedMesh = nullptr;
 };
