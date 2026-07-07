@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "BlackwoodItemDefinition.h"
 #include "BlackwoodInventoryComponent.generated.h"
 
 USTRUCT(BlueprintType)
@@ -10,7 +11,7 @@ struct FBlackwoodInventoryItem
     GENERATED_BODY()
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackwood|Inventory")
-    FName ItemID;
+    TObjectPtr<UBlackwoodItemDefinition> ItemDefinition = nullptr;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackwood|Inventory")
     int32 Quantity = 0;
@@ -25,16 +26,16 @@ public:
     UBlackwoodInventoryComponent();
 
     UFUNCTION(BlueprintCallable, Category = "Blackwood|Inventory")
-    void AddItem(FName ItemID, int32 Quantity);
+    void AddItem(UBlackwoodItemDefinition* ItemDefinition, int32 Quantity);
 
     UFUNCTION(BlueprintCallable, Category = "Blackwood|Inventory")
-    bool RemoveItem(FName ItemID, int32 Quantity);
+    bool RemoveItem(UBlackwoodItemDefinition* ItemDefinition, int32 Quantity);
 
     UFUNCTION(BlueprintPure, Category = "Blackwood|Inventory")
-    bool HasItem(FName ItemID, int32 Quantity) const;
+    bool HasItem(UBlackwoodItemDefinition* ItemDefinition, int32 Quantity) const;
 
     UFUNCTION(BlueprintPure, Category = "Blackwood|Inventory")
-    int32 GetItemQuantity(FName ItemID) const;
+    int32 GetItemQuantity(UBlackwoodItemDefinition* ItemDefinition) const;
 
 protected:
     virtual void BeginPlay() override;
