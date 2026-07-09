@@ -22,6 +22,9 @@ public:
     UFUNCTION(BlueprintPure, Category = "Blackwood|Equipment")
     UBlackwoodItemDefinition* GetEquippedItem() const;
 
+    UFUNCTION(BlueprintPure, Category = "Blackwood|Equipment")
+    UStaticMesh* GetEquippedMesh() const;
+
 protected:
     virtual void BeginPlay() override;
 

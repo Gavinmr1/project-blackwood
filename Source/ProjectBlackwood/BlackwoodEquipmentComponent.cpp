@@ -29,3 +29,13 @@ UBlackwoodItemDefinition* UBlackwoodEquipmentComponent::GetEquippedItem() const
 {
     return EquippedItem;
 }
+
+UStaticMesh* UBlackwoodEquipmentComponent::GetEquippedMesh() const
+{
+    if (!EquippedItem)
+    {
+        return nullptr;
+    }
+
+    return EquippedItem->EquippedMesh;
+}
