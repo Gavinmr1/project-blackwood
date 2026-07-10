@@ -14,6 +14,7 @@ void UBlackwoodTaskComponent::SetActiveTask(UBlackwoodTaskDefinition* Task)
 {
     ActiveTask = Task;
     CurrentProgress = 0;
+    OnTaskUpdated.Broadcast();
 }
 
 void UBlackwoodTaskComponent::AddProgress(int32 Amount)
@@ -32,6 +33,8 @@ void UBlackwoodTaskComponent::AddProgress(int32 Amount)
     UE_LOG(LogTemp, Warning, TEXT("Task Progress: %d / %d"),
         CurrentProgress,
         ActiveTask ? ActiveTask->TargetProgress : 0);
+
+    OnTaskUpdated.Broadcast();
 }
 
 bool UBlackwoodTaskComponent::IsTaskComplete() const

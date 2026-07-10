@@ -5,6 +5,8 @@
 #include "BlackwoodTaskDefinition.h"
 #include "BlackwoodTaskComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTaskUpdated);
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class PROJECTBLACKWOOD_API UBlackwoodTaskComponent : public UActorComponent
 {
@@ -27,6 +29,9 @@ public:
 
     UFUNCTION(BlueprintPure, Category = "Blackwood|Task")
     UBlackwoodTaskDefinition* GetActiveTask() const;
+
+    UPROPERTY(BlueprintAssignable, Category = "Blackwood|Task")
+    FOnTaskUpdated OnTaskUpdated;
 
 protected:
     virtual void BeginPlay() override;
