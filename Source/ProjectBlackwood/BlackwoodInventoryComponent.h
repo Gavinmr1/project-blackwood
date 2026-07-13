@@ -37,6 +37,9 @@ public:
     UFUNCTION(BlueprintPure, Category = "Blackwood|Inventory")
     int32 GetItemQuantity(UBlackwoodItemDefinition* ItemDefinition) const;
 
+    UFUNCTION(BlueprintPure, Category = "Blackwood|Inventory")
+    const TArray<FBlackwoodInventoryItem>& GetItems() const;
+
 protected:
     virtual void BeginPlay() override;
 

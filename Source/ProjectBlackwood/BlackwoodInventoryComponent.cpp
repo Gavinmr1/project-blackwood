@@ -84,3 +84,8 @@ int32 UBlackwoodInventoryComponent::GetItemQuantity(UBlackwoodItemDefinition* It
 
     return 0;
 }
+
+const TArray<FBlackwoodInventoryItem>& UBlackwoodInventoryComponent::GetItems() const
+{
+    return Items;
+}
