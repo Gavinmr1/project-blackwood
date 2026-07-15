@@ -23,6 +23,7 @@ void UBlackwoodEquipmentComponent::EquipItem(UBlackwoodItemDefinition* ItemDefin
 void UBlackwoodEquipmentComponent::UnequipItem()
 {
     EquippedItem = nullptr;
+    EquippedPrimaryTool = FBlackwoodInventoryItem();
 }
 
 UBlackwoodItemDefinition* UBlackwoodEquipmentComponent::GetEquippedItem() const
@@ -38,4 +39,20 @@ UStaticMesh* UBlackwoodEquipmentComponent::GetEquippedMesh() const
     }
 
     return EquippedItem->EquippedMesh;
+}
+
+void UBlackwoodEquipmentComponent::EquipPrimaryTool(const FBlackwoodInventoryItem& Item)
+{
+    if (!Item.ItemDefinition || Item.Quantity <= 0 || !Item.ItemDefinition->bCanEquip)
+    {
+        return;
+    }
+
+    EquippedPrimaryTool = Item;
+    EquipItem(Item.ItemDefinition);
+}
+
+FBlackwoodInventoryItem UBlackwoodEquipmentComponent::GetEquippedPrimaryTool() const
+{
+    return EquippedPrimaryTool;
 }
