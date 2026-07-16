@@ -1,195 +1,241 @@
 # Player Architecture
 
-## Overview
-
-The player system represents the park ranger character.
-
-Players should feel like capable but realistic humans working in a wilderness environment.
-
-The player system must support:
-- Movement
-- Interaction
-- Equipment
-- Inventory
-- Tools
-- Health
-- Multiplayer replication
+Version 1.0
 
 ---
 
-# Player Character
+# Purpose
 
-The player is represented by a Ranger Character.
+This document describes how the player is constructed.
 
-Responsibilities:
-- First-person camera
-- Movement
-- Looking
-- Jumping
-- Sprinting
-- Interaction detection
-- Equipment handling
+The player should be viewed as a collection of independent gameplay systems rather than one large Blueprint.
 
-The character should not contain all gameplay logic.
+Each system has a single responsibility.
 
-Complex systems should be separated into components.
+This architecture allows Project Blackwood to grow without creating an overly complex player Blueprint.
 
 ---
 
-# Component Design
+# High-Level Architecture
 
-The player should use modular components.
+Player Character
 
-Example:
+│
 
-Ranger Character
+├── Camera
 
-Contains:
-- Movement Component
-- Interaction Component
-- Inventory Component
-- Equipment Component
-- Health Component
-- Communication Component
+├── Movement
 
----
+├── Interaction Component
 
-# Movement System
+├── Inventory Component
 
-Supports:
-- Walking
-- Sprinting
-- Crouching
-- Jumping
-- Swimming
-- Climbing (future)
+├── Equipment Component
 
-Movement should prioritize immersion.
+├── Task Component
 
-The ranger is not a superhero.
+├── UI
+
+└── Future Components
 
 ---
 
-# Interaction System
+# Current Components
 
-The interaction system allows players to interact with the world.
+## Interaction Component
 
-Examples:
-- Open doors
-- Pick up objects
-- Repair equipment
-- Use tools
-- Read journals
-- Activate devices
+Purpose
 
-Interactions should use a common interface.
+Detects objects the player can interact with.
 
----
+Responsibilities
 
-# Equipment System
+- Performs interaction traces
+- Finds interactable objects
+- Calls the interaction interface
+- Does not contain gameplay logic
 
-Equipment represents ranger tools.
+The interaction component should never know what an object actually does.
 
-Examples:
-
-## Starting Tools
-- Flashlight
-- Radio
-- First aid kit
-- Repair tools
+It only starts the interaction.
 
 ---
 
-## Advanced Tools
-- Camera
-- Tracking equipment
-- Drone
-- Fire equipment
-- Rescue gear
+## Inventory Component
+
+Purpose
+
+Stores every item owned by the player.
+
+Responsibilities
+
+- Add items
+- Remove items
+- Stack items
+- Query item quantities
+
+The Inventory Component owns player possessions.
+
+It does not know what is equipped.
 
 ---
 
-# Inventory
+## Equipment Component
 
-Inventory should be realistic.
+Purpose
 
-The player has limited carrying capacity.
+Tracks which items are currently equipped.
 
-Equipment decisions matter.
+Responsibilities
 
-Example:
+- Equip tools
+- Unequip tools
+- Report equipped items
+- Provide equipped meshes
 
-Bring:
-- Fire extinguisher
+The Equipment Component owns player loadout.
 
-or:
-- Medical supplies
+It does not own inventory.
 
-Players must prepare for situations.
-
----
-
-# Tool Usage
-
-Tools should have meaningful actions.
-
-Examples:
-
-Hammer:
-- Repair structures
-
-Chainsaw:
-- Remove fallen trees
-
-Radio:
-- Communicate
-
-Camera:
-- Document evidence
+Inventory and Equipment remain separate systems.
 
 ---
 
-# Health System
+## Task Component
 
-Players can become injured.
+Purpose
 
-Possible conditions:
-- Minor injuries
-- Exhaustion
-- Environmental hazards
+Tracks player objectives.
 
-Players recover through:
-- First aid
-- Rest
-- Station resources
+Responsibilities
 
----
+- Current tasks
+- Progress
+- Completion
+- Objective updates
 
-# Player States
+Tasks should never directly modify gameplay systems.
 
-Possible states:
-- Healthy
-- Injured
-- Exhausted
-- Downed
-- Rescued
+Instead they observe gameplay events.
 
 ---
 
-# Multiplayer Requirements
+## User Interface
 
-Player systems must support:
-- Network replication
-- Shared interactions
-- Player visibility
-- Equipment synchronization
+Purpose
+
+Display gameplay information.
+
+Responsibilities
+
+- Backpack
+- Loadout
+- Item Details
+- Task Tracker
+- Interaction Prompts
+
+UI should display gameplay state.
+
+It should never own gameplay state.
 
 ---
 
-# Design Rule
+# Current Gameplay Loop
 
-The player should feel like a trained ranger, not a combat character.
+Current prototype
 
-Tools solve problems.
+Explore
 
-Not weapons.
+↓
+
+Find Repair Tool
+
+↓
+
+Interact
+
+↓
+
+Inventory
+
+↓
+
+Equip Tool
+
+↓
+
+Repair Trail Sign
+
+↓
+
+Task Progress
+
+↓
+
+Complete Objective
+
+Future gameplay loops should extend this pattern instead of replacing it.
+
+---
+
+# Future Components
+
+The following systems are planned but not yet implemented.
+
+Health Component
+
+Stamina Component
+
+Radio Component
+
+Notebook Component
+
+Quest Component
+
+Save Component
+
+Audio Component
+
+Vehicle Component
+
+Multiplayer Component
+
+None of these systems should be added to the player until they have a clearly defined responsibility.
+
+---
+
+# Architectural Rules
+
+Every component should answer one question.
+
+Interaction
+
+"What is the player looking at?"
+
+Inventory
+
+"What does the player own?"
+
+Equipment
+
+"What is the player using?"
+
+Tasks
+
+"What is the player trying to accomplish?"
+
+UI
+
+"What should the player currently see?"
+
+Whenever a component begins answering multiple questions, consider splitting it into separate components.
+
+---
+
+# Philosophy
+
+The player should become simpler over time, not more complicated.
+
+New gameplay systems should usually become new Components rather than expanding the player Blueprint.
+
+The player Blueprint should primarily coordinate systems instead of implementing gameplay itself.
