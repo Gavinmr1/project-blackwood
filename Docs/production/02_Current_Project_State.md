@@ -199,3 +199,25 @@ Sign Checks Equipped Tool
 Repair Sign
     ↓
 Task Progress Updates
+
+## Current Milestone
+
+Completed the first version of the equipment framework.
+
+Implemented:
+
+- Item Definitions
+- Inventory Component
+- Equipment Component
+- Equip / Unequip
+- Equipped mesh spawning
+- Hand socket attachment
+- Inventory UI integration
+- Loadout display
+- Animation state for equipped items (placeholder)
+
+Known TODOs:
+
+- Replace placeholder equipped animation.
+- Create proper tool meshes.
+- Add additional equipment slots.
