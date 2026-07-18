@@ -62,6 +62,26 @@ The World Developer should avoid modifying core gameplay systems unless coordina
 
 ---
 
+# Audio & Narrative Designer
+
+Primary Responsibilities
+
+- Voice acting
+- Story Writing
+- Ambient sound
+- Sound effects
+- Music research
+- Dialogue writing
+- Notes and journals
+- Radio messages
+- Ranger logs
+- Creature vocal concepts
+- Emotional tone
+
+Create the emotional identity of Project Blackwood through sound, voice, dialogue, environmental storytelling, and atmosphere.
+
+---
+
 # Shared Responsibilities
 
 Both developers should:
